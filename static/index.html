@@ -3,8 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description"
-          content="This class webpage for UMD's ENES100 allows users to access the Vision System and Documentation for the class.">
     <meta name="google-site-verification" content="4clMxUDhEpHHjak_ML03ekw8pFif-G4_l9lwBw8WfeM"/>
 
     <title>ENES100 - Intro to Engineering Design</title>
@@ -17,42 +15,11 @@
 
 <body style="width: 100%; height: 100%">
 <nav class="navbar navbar-expand-lg umd">
-    <div style="color: white; width: 40%" class="umd">
-        Tip: This screen too crowded? <br><small style="display: inline-block;">Open this screen on your laptop: 1. Connect to the VisionSystem Wi-Fi network
-        (VisionSystem...)" 2. Go to "enes100.umd.edu" 3. "Go to Vision System"</small>
-    </div>
     <div class="container">
-        <!--Logo-->
+
         <h1 id="logo" class="navbar-brand">
-            ENES100 Vision System 2
+            ENES100 Vision System
         </h1>
-
-
-        <!--Hamburger Button-->
-        <button class="navbar-toggler float-right" type="button" data-toggle="collapse"
-                data-target="#collapsibleNavbar">
-            <span class="navbar-toggler-icon mt-3">☰</span>
-        </button>
-        <!--Collapsible Content-->
-        <div id="collapsibleNavbar" class="navbar-collapse collapse">
-            <ul class="navbar-nav ml-auto">
-                <li class="nav-item">
-                    <a class="nav-link" href="https://enes100.umd.edu/oldvisionsystem">Old Vision System</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="https://enes100.umd.edu/libraries/">Libraries</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="https://enes100.umd.edu/simulatorweb">Simulator</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="https://enes100.umd.edu/examples">Examples</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="https://enes100.umd.edu/faq">FAQ</a>
-                </li>
-            </ul>
-        </div>
     </div>
 </nav>
 <!--The whole window-->
@@ -65,9 +32,6 @@
                 <select id="port">
                     <option>Waiting for connection...</option>
                 </select>
-                <small style="padding-left: 4px">Team not here? See <a target="_blank"
-                                                                       href="https://docs.google.com/document/d/1hrvkhNof1VFIL7retfn17tdnPCOo5d2WmNKgmRgjyy8/edit?usp=sharing">Vision
-                    System Troubleshooting</a>.</small>
                 <span id="info"></span>
             </div>
 
@@ -244,15 +208,11 @@
         }
     }
 
-    let paused = false;
-
     function errorLog(message) {
         let console_window = document.getElementById('console');
         console_window.value += '\n' + message.data
         console_window.scrollTop = console_window.scrollHeight;
     }
-
-    let images;
 
     window.onload = () => {
         teamSelect.onchange = changePort;
@@ -276,19 +236,8 @@
 
         ws.onmessage = message => {
             if (message.data instanceof Blob) {
-                // console.log(message.data)
-                if (paused) return;
-                // take the bytes in message.data and put them in the image
-                if (Math.random() > .99999) {
-                    paused = true;
-                    document.getElementById('stream').src = images[Math.floor(Math.random() * images.length)];
-                    setTimeout(() => {
-                        paused = false;
-                    }, 1000)
-                } else {
-                    URL.revokeObjectURL(document.getElementById('stream').src);
-                    document.getElementById('stream').src = URL.createObjectURL(message.data);
-                }
+                URL.revokeObjectURL(document.getElementById('stream').src);
+                document.getElementById('stream').src = URL.createObjectURL(message.data);
                 return
             }
             message = JSON.parse(message.data)
@@ -308,25 +257,8 @@
                 case 'error':
                     errorLog(message);
                     break
-                case 'jpegs':
-                    images = message.data;
-                    console.log('got images', images)
-                    break
             }
         }
         window.onunload = ws.close;
-    }
-    const keys = [];
-    window.onkeydown = e => {
-        keys.push(e.key);
-        console.log(keys)
-        if (JSON.stringify(keys) === JSON.stringify(['l', 't', 'f', 'Shift', '>', 'u', 't', 'f'])) {
-            paused = true;
-            document.getElementById('stream').src = images[Math.floor(Math.random() * images.length)];
-            setTimeout(() => {
-                paused = false;
-            }, 500)
-            keys.length = 0;
-        }
     }
 </script>
