@@ -71,7 +71,7 @@ def send_console_message(message: str):
     ws_server.send_message_to_all(json.dumps({'type': 'error', 'data': message}))
 
 def display_pred_img(espip):
-    img_pth = '/img_curr.jpg'
+    img_pth = '/home/loaner05/img_curr.jpg'
     espip = espip[0]
     if ws_server is None:
         logging.error(f'no ws to dispalay image : {espip}')
@@ -90,7 +90,7 @@ def display_pred_img(espip):
             logging.error(f'failed to save image : {espip}')
             raise Exception("could not save image to vs (cv2)")
 
-    ws_server.send_message_to_all(json.dumps({'type': 'pred_img', 'data': img_pth}))
+    ws_server.send_message_to_all(json.dumps({'type': 'pred_img', 'data': '/img_curr.jpg'}))
     
 def display_pred_result(pred):
     if ws_server is None:
