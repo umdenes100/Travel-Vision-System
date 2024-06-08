@@ -89,7 +89,7 @@ def display_pred_img(espip):
             logging.error(f'failed to save image : {espip}')
             raise Exception("could not save image to vs (cv2)")
 
-    ws_server.send_message_to_all(json.dumps({'type': 'pred_img', 'data': '~/Travel-Vision-System/components/communications/img_curr.jpg'}))
+    ws_server.send_message_to_all(json.dumps({'type': 'pred_img', 'data': '~/img_curr.jpg'}))
     
 def display_pred_result(pred):
     if ws_server is None:
