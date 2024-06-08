@@ -108,7 +108,7 @@ class MyHttpRequestHandler(http.server.SimpleHTTPRequestHandler):
             if self.path == '/':
                 self.path = '/index.html'
             self.path = '/static' + self.path
-
+        print(self.path)
         try:
             return http.server.SimpleHTTPRequestHandler.do_GET(self)
         except BrokenPipeError:
