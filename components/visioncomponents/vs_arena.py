@@ -30,29 +30,29 @@ def getHomographyMatrix(marker_list, camera_width, camera_height):
     :return: the homography matrix or None if there are not enough markers
     """
     pt00 = None
-    pt02 = None
-    pt40 = None
-    pt42 = None
+    pt01 = None
+    pt20 = None
+    pt21 = None
     for aruco_id, corners in marker_list:
         if aruco_id == 0:  # Finding all the corners of the arena. Corners are clockwise starting from 0 0.
             pt00 = center(corners)
         elif aruco_id == 1:
-            pt02 = center(corners)
+            pt01 = center(corners)
         elif aruco_id == 2:
-            pt42 = center(corners)
+            pt21 = center(corners)
         elif aruco_id == 3:
-            pt40 = center(corners)
+            pt20 = center(corners)
 
-    if pt00 is None or pt02 is None or pt40 is None or pt42 is None:
+    if pt00 is None or pt01 is None or pt20 is None or pt21 is None:
         logging.debug("One of the markers is blocked - cannot generate homography matrix")
         return None
-    src_pts = np.float32([pt00, pt02, pt42, pt40])  # pixel coordinates of the markers. Clockwise from 0,0
-    dst_pts = np.float32([[0.0, 0.0], [0.0, 2.0], [4.0, 2.0], [4.0, 0.0]])  # arena coordinates of markers, clockwise from 0,0
+    src_pts = np.float32([pt00, pt01, pt21, pt20])  # pixel coordinates of the markers. Clockwise from 0,0
+    dst_pts = np.float32([[0.0, 0.0], [0.0, 1.0], [2.0, 1.0], [2.0, 0.0]])  # arena coordinates of markers, clockwise from 0,0
     homography_matrix = cv2.getPerspectiveTransform(src_pts, dst_pts)  # this gives us the homography matrix of the arena
     # Camera coordinates, clockwise from 0,0. Note that 0 0 for a frame is upper left
     camera_dst_points = np.float32([[0.0, camera_height], [0.0, 0.0], [camera_width, 0.0], [camera_width, camera_height]])
     # the camera source points are the corners of the camera frame, but extended by a factor of 1.1 from the center
-    camera_src_pts = np.float32([pt00, pt02, pt42, pt40])
+    camera_src_pts = np.float32([pt00, pt01, pt21, pt20])
     cent = (camera_width / 2, camera_height / 2)
     for i in range(4):
         camera_src_pts[i] = (camera_src_pts[i][0] - cent[0]) * 1.05 + cent[0], (camera_src_pts[i][1] - cent[1]) * 1.1 + cent[1]
