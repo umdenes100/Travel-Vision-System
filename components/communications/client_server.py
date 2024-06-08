@@ -71,6 +71,7 @@ def send_console_message(message: str):
     ws_server.send_message_to_all(json.dumps({'type': 'error', 'data': message}))
 
 def display_pred_img(espip):
+    espip = espip["ip"]
     if ws_server is None:
         logging.error(f'no ws to dispalay image : {espip}')
         return
