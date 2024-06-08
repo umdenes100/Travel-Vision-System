@@ -132,6 +132,7 @@ def message_received(client, server: WebsocketServer, message):
             client_server.send_console_message(f'Team {get_team_name(client)} requested a prediction but no jetson could be found.')
         else:
           client_server.send_console_message(f'ML prediction from team {get_team_name(client)} requested. Waiting for response.')
+          client_server.display_pred_img(client['address'])
 
 def send_locations():
     # print(dr_op.aruco_markers[402])

@@ -6,6 +6,7 @@ import struct
 import sys
 import threading
 import time
+import cv2
 from http.server import ThreadingHTTPServer
 
 from websocket_server import WebsocketServer, WebSocketHandler, OPCODE_BINARY, FIN, PAYLOAD_LEN_EXT16, PAYLOAD_LEN_EXT64
@@ -68,6 +69,32 @@ def send_console_message(message: str):
         return
     logging.debug(message)
     ws_server.send_message_to_all(json.dumps({'type': 'error', 'data': message}))
+
+def display_pred_img(espip):
+    if ws_server is None:
+        logging.error(f'no ws to dispalay image : {espip}')
+        return
+    
+    cap = cv2.VideoCapture('http://' + espip + "/cam.jpg")
+    if cap.isOpened():
+        ret, frame = cap.read()
+    else:
+        logging.error(f'failed to grab image : {espip}')
+        raise Exception("Could not get image from WiFiCam (cv2)")
+
+    try:
+        cv2.imwrite('img_curr.jpg', frame)
+    except:
+            logging.error(f'failed to save image : {espip}')
+            raise Exception("could not save image to vs (cv2)")
+
+    ws_server.send_message_to_all(json.dumps({'type': 'pred_img', 'data': '~/Travel-Vision-System/components/communications/img_curr.jpg'}))
+    
+def display_pred_result(pred):
+    if ws_server is None:
+        logging.error(f'no ws to display pred : {pred}')
+        return
+    ws_server.send_message_to_all(json.dumps({'type': 'pred_txt', 'data': pred}))
 
 
 # The way we send the static HTML page is with a simple HTTP server. We only server from the static folder. Very insecure.

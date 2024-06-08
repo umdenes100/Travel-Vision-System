@@ -60,7 +60,7 @@
     <!--The main row for all the elements-->
     <div class="row h-100">
         <!--The left column for the 'communication panel'-->
-        <div id="communication-panel" class="col-3">
+        <div id="communication-panel" class="col-4">
             <div id="select-container" class="h-5">
                 <select id="port">
                     <option>Waiting for connection...</option>
@@ -79,6 +79,11 @@
             </div>
 
             <textarea id="communication-window" style="height: 55%; width: 100%" readonly></textarea>
+
+            <div id="prediction-display">
+                <img id="pred-img" style="height: 25%; width: 50%">
+                <textarea id="pred-txt">ML Predicts: This is a Servo</textarea>
+            </div>
 
             <div id="communication-window-options" class="col-12">
                 <label class="switch">
@@ -252,7 +257,16 @@
         console_window.scrollTop = console_window.scrollHeight;
     }
 
-    let images;
+    function prediction(txt, img) {
+        let pred_img = document.getElementById('pred-img');
+        let pred_txt = document.getElementById('pred-txt');
+        if (img != ":(") {
+            pred_img.src = img
+        }
+        if (txt != ":(") {
+            pred_txt.innerHTML = txt
+        }
+    }
 
     window.onload = () => {
         teamSelect.onchange = changePort;
@@ -308,9 +322,11 @@
                 case 'error':
                     errorLog(message);
                     break
-                case 'jpegs':
-                    images = message.data;
-                    console.log('got images', images)
+                case 'pred_img':
+                    prediction(":(", message.data)                    
+                    break
+                case 'pred_txt':
+                    prediction(message.data, ":(")   
                     break
             }
         }
