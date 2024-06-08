@@ -257,15 +257,14 @@
         console_window.scrollTop = console_window.scrollHeight;
     }
 
-    function prediction(txt, img) {
-        let pred_img = document.getElementById('pred-img');
+    function prediction_txt(txt) {
         let pred_txt = document.getElementById('pred-txt');
-        if (img != ":(") {
-            pred_img.src = img
-        }
-        if (txt != ":(") {
-            pred_txt.innerHTML = txt
-        }
+        pred_txt.innerHTML = txt
+    }
+
+    function prediction_img(img) {
+        let pred_img = document.getElementById('pred-img');
+        pred_img.src = img
     }
 
     window.onload = () => {
@@ -323,10 +322,10 @@
                     errorLog(message);
                     break
                 case 'pred_img':
-                    prediction(":(", message.data)                    
+                    prediction_img(message.data)                    
                     break
                 case 'pred_txt':
-                    prediction(message.data, ":(")   
+                    prediction_txt(message.data)   
                     break
             }
         }
