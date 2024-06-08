@@ -71,7 +71,7 @@ def send_console_message(message: str):
     ws_server.send_message_to_all(json.dumps({'type': 'error', 'data': message}))
 
 def display_pred_img(espip):
-    img_pth = '/home/loaner05/img_curr.jpg'
+    img_pth = '/img_curr.jpg'
     espip = espip[0]
     if ws_server is None:
         logging.error(f'no ws to dispalay image : {espip}')
@@ -102,9 +102,13 @@ def display_pred_result(pred):
 # The way we send the static HTML page is with a simple HTTP server. We only server from the static folder. Very insecure.
 class MyHttpRequestHandler(http.server.SimpleHTTPRequestHandler):
     def do_GET(self):
-        if self.path == '/':
-            self.path = '/index.html'
-        self.path = '/static' + self.path
+        if self.path == '/img_curr.jpg':
+            self.path = '/home/loaner05' + self.path
+        else:
+            if self.path == '/':
+                self.path = '/index.html'
+            self.path = '/static' + self.path
+
         try:
             return http.server.SimpleHTTPRequestHandler.do_GET(self)
         except BrokenPipeError:
