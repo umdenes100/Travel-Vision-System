@@ -264,7 +264,7 @@
 
     function prediction_img(img) {
         let pred_img = document.getElementById('pred-img');
-        pred_img.src = img
+        pred_img.src = img + '?t=' + Date.now
     }
 
     window.onload = () => {
