@@ -84,7 +84,7 @@ def display_pred_img(espip):
         raise Exception("Could not get image from WiFiCam (cv2)")
 
     try:
-        cv2.imwrite('img_curr.jpg', frame)
+        cv2.imwrite('/home/loaner05/img_curr.jpg', frame)
     except:
             logging.error(f'failed to save image : {espip}')
             raise Exception("could not save image to vs (cv2)")
