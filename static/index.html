@@ -46,7 +46,7 @@
 
             <div id="prediction-display">
                 <img id="pred-img" style="height: 25%; width: 50%">
-                <textarea id="pred-txt" style ="height: 50%; width: 50%">ML Predicts: This is a Servo</textarea>
+                <textarea id="pred-txt" style ="height: 50%; width: 50%">ML Predicts: </textarea>
             </div>
 
             <div id="communication-window-options" class="col-12">
@@ -221,7 +221,7 @@
 
     function prediction_txt(txt) {
         let pred_txt = document.getElementById('pred-txt');
-        pred_txt.innerHTML = txt
+        pred_txt.innerHTML = 'ML Predicts: ' + txt
     }
 
     function prediction_img(img) {
