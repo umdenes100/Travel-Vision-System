@@ -44,10 +44,16 @@
 
             <textarea id="communication-window" style="height: 55%; width: 100%" readonly></textarea>
 
+            <button class='sexy' onclick="cachedPrints = {}; comm_window.value = ''">Clear Prints</button>
+
             <div id="prediction-display">
-                <div id="communication-panel" class="col-2">
-                    <img id="pred-img" style="height: 100%; width: 50%" src="/blank.jpg">
-                    <textarea id="pred-txt" style ="height: 100%; width: 50%">ML Predicts: </textarea>
+                <div class="row">
+                    <div class="col">
+                        <img id="pred-img" style="height: 300%; width: 100%" src="/blank.jpg">
+                    </div>
+                    <div class="col">
+                        <textarea id="pred-txt" style ="height: 300%; width: 100%">ML Predicts: </textarea>
+                    </div>
                 </div>
             </div>
             <!--
@@ -66,7 +72,6 @@
                 Show disconnected teams
                 <br>
             -->
-                <button class='sexy' onclick="cachedPrints = {}; comm_window.value = ''">Clear Prints</button>
             </div>
         </div>
 
