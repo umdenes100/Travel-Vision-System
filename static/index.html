@@ -45,10 +45,12 @@
             <textarea id="communication-window" style="height: 55%; width: 100%" readonly></textarea>
 
             <div id="prediction-display">
-                <img id="pred-img" style="height: 25%; width: 50%">
-                <textarea id="pred-txt" style ="height: 50%; width: 50%">ML Predicts: </textarea>
+                <div id="communication-panel" class="col-2">
+                    <img id="pred-img" style="height: 100%; width: 50%" src="/blank.jpg">
+                    <textarea id="pred-txt" style ="height: 100%; width: 50%">ML Predicts: </textarea>
+                </div>
             </div>
-
+            <!--
             <div id="communication-window-options" class="col-12">
                 <label class="switch">
                     <input id="autoscroll" type="checkbox" checked>
@@ -63,6 +65,7 @@
                 </label>
                 Show disconnected teams
                 <br>
+            -->
                 <button class='sexy' onclick="cachedPrints = {}; comm_window.value = ''">Clear Prints</button>
             </div>
         </div>
