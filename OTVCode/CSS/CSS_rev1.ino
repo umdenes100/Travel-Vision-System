@@ -19,7 +19,7 @@ void loop() {
   String colors[] = { "This Side Grey", "This Side Red" };
 
   Enes100.println("TESTING begin");
-  driveTo(150, 1.8, 0.2);
+  driveTo(150, 1.8, 0.85);
   delay(1000);
   turnTo(1.565);
   stop();
