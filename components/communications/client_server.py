@@ -87,10 +87,21 @@ def display_pred_img(espip):
 
     ws_server.send_message_to_all(json.dumps({'type': 'pred_img', 'data': '/img_curr.jpg'}))
     
+    
+pred_dict = { 
+	0: "Zero",
+	1: "One",
+	2: "Two",
+	3: "Three",
+	4: "Four",
+	5: "Five"
+}
+
 def display_pred_result(pred):
     if ws_server is None:
         logging.error(f'no ws to display pred : {pred}')
         return
+    pred = pred_dict[pred] + " (" + str(pred) + ")"
     ws_server.send_message_to_all(json.dumps({'type': 'pred_txt', 'data': pred}))
 
 

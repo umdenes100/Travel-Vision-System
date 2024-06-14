@@ -42,26 +42,45 @@
                 </div>
             </div>
 
-            <textarea id="communication-window" style="height: 35%; width: 100%" readonly></textarea>
+            <textarea id="communication-window" style="height: 55%; width: 100%" readonly></textarea>
 
             <button class='sexy' onclick="cachedPrints = {}; comm_window.value = ''">Clear Prints</button>
 
-            <div class="col-12">
-                <img id="pred-img" style="height: 75%; width: 75%;" class="center" src="/blank.jpg">
+            <div id="prediction-display">
+                <div class="row">
+                    <div class="col">
+                        <img id="pred-img" style="height: 100%; width: 100%" src="/static/blank.jpg">
+                    </div>
+                    <div class="col">
+                        <textarea id="pred-txt" style ="height: 100%; width: 100%">ML Predicts: </textarea>
+                    </div>
+                </div>
             </div>
-            <div class="col-12">
-                <textarea id="pred-txt" style ="height: 100%; width: 100%" readonly>ML Predicts: </textarea>
+            <!--
+            <div id="communication-window-options" class="col-12">
+                <label class="switch">
+                    <input id="autoscroll" type="checkbox" checked>
+                    <span class="slider round"></span>
+                </label>
+                Autoscroll
+                <br>
+                <label class="switch">
+                    <input id="show-disconnected-teams" type="checkbox"
+                           onclick="updateOptionsList(); changePort()">
+                    <span class="slider round"></span>
+                </label>
+                Show disconnected teams
+                <br>
+            -->
             </div>
-            
-            </div>        
+        </div>
 
-		<div class="col-9">
-		    <div id="stream-container">
-		        <img id="stream"
-		             alt="Failed to get image from Vision System. Restart the Vision System by closing all open windows and opening Vision System 2 from the desktop.">
-		    </div>
-		    <textarea id="console" style="width: 100%" readonly></textarea>
-		</div>
+        <div class="col-9">
+            <div id="stream-container">
+                <img id="stream"
+                     alt="Failed to get image from Vision System. Restart the Vision System by closing all open windows and opening Vision System 2 from the desktop.">
+            </div>
+            <textarea id="console" style="width: 100%" readonly></textarea>
         </div>
     </div>
 </div>
